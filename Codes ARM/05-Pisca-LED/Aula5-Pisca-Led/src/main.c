@@ -421,7 +421,7 @@ ioport_set_pin_sense_mode(GPIO_PUSH_BUTTON_2, GPIO_PUSH_BUTTON_2_SENSE);
 		/* Toggle LED state if active */
 		if (g_b_led0_active) {
 			ioport_toggle_pin_level(LED0_GPIO);
-			printf("1 ");
+			printf("1");
 		}
 
 		/* Wait for 500ms */

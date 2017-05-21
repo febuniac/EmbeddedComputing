@@ -123,7 +123,7 @@ static void USART1_init(void){
  pio_set_peripheral(PIOA, PIO_PERIPH_A, PIO_PA21); // TX
  MATRIX->CCFG_SYSIO |= CCFG_SYSIO_SYSIO4;
   
-  /* Configura opcoes USART */
+  /* Configura opcoes  */
   const sam_usart_opt_t usart_settings = {
     .baudrate     = 115200,
     .char_length  = US_MR_CHRL_8_BIT,
@@ -151,7 +151,16 @@ static void USART1_init(void){
  * Retorna a quantidade de char escritos
  */
 uint32_t usart_puts(uint8_t *pstring){
-     
+	int contador = 0;
+	 
+	 while (*pstring[contador] > 0){
+		usart_serial_putchar(USART_COM, *pstring[contador]);	
+		contador ++; 
+	 } 
+	 
+     if ( uint32_t uart_is_tx_empty(Uart *pstring)) {
+		 
+	 }
   return 0;
 }
 

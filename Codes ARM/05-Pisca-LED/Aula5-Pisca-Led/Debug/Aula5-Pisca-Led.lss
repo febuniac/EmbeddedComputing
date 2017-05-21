@@ -33,9 +33,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  14 .debug_line   0000a377  00000000  00000000  00052a6d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_str    0008a4e9  00000000  00000000  0005cde4  2**0
+ 15 .debug_str    0008a4ed  00000000  00000000  0005cde4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_frame  00003bd8  00000000  00000000  000e72d0  2**2
+ 16 .debug_frame  00003bd8  00000000  00000000  000e72d4  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -6676,7 +6676,7 @@ ioport_set_pin_sense_mode(GPIO_PUSH_BUTTON_2, GPIO_PUSH_BUTTON_2_SENSE);
   40225e:	2048      	movs	r0, #72	; 0x48
   402260:	4b15      	ldr	r3, [pc, #84]	; (4022b8 <main+0xd0>)
   402262:	4798      	blx	r3
-			printf("1 ");
+			printf("1");
   402264:	4815      	ldr	r0, [pc, #84]	; (4022bc <main+0xd4>)
   402266:	4b12      	ldr	r3, [pc, #72]	; (4022b0 <main+0xc8>)
   402268:	4798      	blx	r3
@@ -11543,12 +11543,12 @@ ioport_set_pin_sense_mode(GPIO_PUSH_BUTTON_2, GPIO_PUSH_BUTTON_2_SENSE);
   4053d0:	2d2d0a0d 	.word	0x2d2d0a0d
   4053d4:	6d6f4320 	.word	0x6d6f4320
   4053d8:	656c6970 	.word	0x656c6970
-  4053dc:	46203a64 	.word	0x46203a64
-  4053e0:	32206265 	.word	0x32206265
-  4053e4:	30322030 	.word	0x30322030
+  4053dc:	4d203a64 	.word	0x4d203a64
+  4053e0:	31207961 	.word	0x31207961
+  4053e4:	30322037 	.word	0x30322037
   4053e8:	31203731 	.word	0x31203731
-  4053ec:	30313a37 	.word	0x30313a37
-  4053f0:	2033353a 	.word	0x2033353a
+  4053ec:	36313a39 	.word	0x36313a39
+  4053f0:	2035323a 	.word	0x2035323a
   4053f4:	000d2d2d 	.word	0x000d2d2d
   4053f8:	666e6f43 	.word	0x666e6f43
   4053fc:	72756769 	.word	0x72756769
@@ -11596,7 +11596,7 @@ ioport_set_pin_sense_mode(GPIO_PUSH_BUTTON_2, GPIO_PUSH_BUTTON_2_SENSE);
   4054a4:	696b6e69 	.word	0x696b6e69
   4054a8:	0d2e676e 	.word	0x0d2e676e
   4054ac:	0000000a 	.word	0x0000000a
-  4054b0:	00002031 	.word	0x00002031
+  4054b0:	00000031 	.word	0x00000031
   4054b4:	00000043 	.word	0x00000043
 
 004054b8 <_global_impure_ptr>:

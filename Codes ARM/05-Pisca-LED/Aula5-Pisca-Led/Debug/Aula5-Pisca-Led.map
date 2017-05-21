@@ -585,7 +585,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3a src/ASF/common/services/serial/usart_serial.o
  .debug_macro   0x00000000       0x28 src/ASF/common/services/serial/usart_serial.o
  .debug_line    0x00000000      0xc65 src/ASF/common/services/serial/usart_serial.o
- .debug_str     0x00000000    0x8551e src/ASF/common/services/serial/usart_serial.o
+ .debug_str     0x00000000    0x85522 src/ASF/common/services/serial/usart_serial.o
  .comment       0x00000000       0x5a src/ASF/common/services/serial/usart_serial.o
  .debug_frame   0x00000000       0xa0 src/ASF/common/services/serial/usart_serial.o
  .ARM.attributes
@@ -2038,7 +2038,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3f src/ASF/sam/drivers/matrix/matrix.o
  .debug_macro   0x00000000      0x3ca src/ASF/sam/drivers/matrix/matrix.o
  .debug_line    0x00000000      0xb5f src/ASF/sam/drivers/matrix/matrix.o
- .debug_str     0x00000000    0x81a4a src/ASF/sam/drivers/matrix/matrix.o
+ .debug_str     0x00000000    0x81a4e src/ASF/sam/drivers/matrix/matrix.o
  .comment       0x00000000       0x5a src/ASF/sam/drivers/matrix/matrix.o
  .debug_frame   0x00000000      0x380 src/ASF/sam/drivers/matrix/matrix.o
  .ARM.attributes
@@ -2346,7 +2346,7 @@ Discarded input sections
  .debug_macro   0x00000000      0x3ca src/ASF/sam/drivers/mpu/mpu.o
  .debug_macro   0x00000000      0x1c8 src/ASF/sam/drivers/mpu/mpu.o
  .debug_line    0x00000000      0xa9d src/ASF/sam/drivers/mpu/mpu.o
- .debug_str     0x00000000    0x82221 src/ASF/sam/drivers/mpu/mpu.o
+ .debug_str     0x00000000    0x82225 src/ASF/sam/drivers/mpu/mpu.o
  .comment       0x00000000       0x5a src/ASF/sam/drivers/mpu/mpu.o
  .debug_frame   0x00000000      0x168 src/ASF/sam/drivers/mpu/mpu.o
  .ARM.attributes
@@ -3692,7 +3692,7 @@ Discarded input sections
  .debug_macro   0x00000000      0x2bf src/ASF/sam/drivers/pmc/sleep.o
  .debug_macro   0x00000000      0x8d6 src/ASF/sam/drivers/pmc/sleep.o
  .debug_line    0x00000000      0xb2c src/ASF/sam/drivers/pmc/sleep.o
- .debug_str     0x00000000    0x84d6d src/ASF/sam/drivers/pmc/sleep.o
+ .debug_str     0x00000000    0x84d71 src/ASF/sam/drivers/pmc/sleep.o
  .comment       0x00000000       0x5a src/ASF/sam/drivers/pmc/sleep.o
  .debug_frame   0x00000000       0x7c src/ASF/sam/drivers/pmc/sleep.o
  .ARM.attributes
@@ -4026,7 +4026,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x3f src/ASF/sam/drivers/tc/tc.o
  .debug_macro   0x00000000      0x3ca src/ASF/sam/drivers/tc/tc.o
  .debug_line    0x00000000      0xb60 src/ASF/sam/drivers/tc/tc.o
- .debug_str     0x00000000    0x817ee src/ASF/sam/drivers/tc/tc.o
+ .debug_str     0x00000000    0x817f2 src/ASF/sam/drivers/tc/tc.o
  .comment       0x00000000       0x5a src/ASF/sam/drivers/tc/tc.o
  .debug_frame   0x00000000      0x3a8 src/ASF/sam/drivers/tc/tc.o
  .ARM.attributes
@@ -6378,8 +6378,8 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
  *(.glue_7)
  .glue_7        0x00405390        0x0 linker stubs
  *(.rodata .rodata* .gnu.linkonce.r.*)
- .rodata        0x00405390      0x123 src/main.o
- *fill*         0x004054b3        0x1 
+ .rodata        0x00405390      0x122 src/main.o
+ *fill*         0x004054b2        0x2 
  .rodata.str1.4
                 0x004054b4        0x2 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/5.3.1/../../../../arm-none-eabi/lib/armv7e-m\libc.a(lib_a-impure.o)
  *fill*         0x004054b6        0x2 
@@ -7000,35 +7000,35 @@ OUTPUT(Aula5-Pisca-Led.elf elf32-littlearm)
  .debug_line    0x00008f18      0x3da src/ASF/sam/utils/syscalls/gcc/syscalls.o
  .debug_line    0x000092f2     0x1085 src/main.o
 
-.debug_str      0x00000000    0x8a4e9
- .debug_str     0x00000000    0x84d13 src/ASF/common/services/clock/same70/sysclk.o
-                              0x8535d (size before relaxing)
- .debug_str     0x00084d13       0x94 src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
-                              0x814db (size before relaxing)
- .debug_str     0x00084da7       0x3f src/ASF/common/utils/stdio/read.o
-                              0x8148a (size before relaxing)
- .debug_str     0x00084de6       0x2e src/ASF/common/utils/stdio/write.o
-                              0x8148c (size before relaxing)
- .debug_str     0x00084e14      0xfe6 src/ASF/sam/boards/same70_xplained/init.o
-                              0x86099 (size before relaxing)
- .debug_str     0x00085dfa      0x5b8 src/ASF/sam/drivers/pio/pio.o
-                              0x82031 (size before relaxing)
- .debug_str     0x000863b2      0x44f src/ASF/sam/drivers/pio/pio_handler.o
-                              0x820a2 (size before relaxing)
- .debug_str     0x00086801      0x7c7 src/ASF/sam/drivers/pmc/pmc.o
-                              0x82186 (size before relaxing)
- .debug_str     0x00086fc8      0x301 src/ASF/sam/drivers/uart/uart.o
-                              0x8178b (size before relaxing)
- .debug_str     0x000872c9      0xb6a src/ASF/sam/drivers/usart/usart.o
-                              0x82023 (size before relaxing)
- .debug_str     0x00087e33      0x67c src/ASF/sam/utils/cmsis/same70/source/templates/gcc/startup_same70.o
-                              0x81c81 (size before relaxing)
- .debug_str     0x000884af      0x16f src/ASF/sam/utils/cmsis/same70/source/templates/system_same70.o
-                              0x726b8 (size before relaxing)
- .debug_str     0x0008861e      0x748 src/ASF/sam/utils/syscalls/gcc/syscalls.o
-                               0x6a18 (size before relaxing)
- .debug_str     0x00088d66     0x1783 src/main.o
-                              0x87abc (size before relaxing)
+.debug_str      0x00000000    0x8a4ed
+ .debug_str     0x00000000    0x84d17 src/ASF/common/services/clock/same70/sysclk.o
+                              0x85361 (size before relaxing)
+ .debug_str     0x00084d17       0x94 src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
+                              0x814df (size before relaxing)
+ .debug_str     0x00084dab       0x3f src/ASF/common/utils/stdio/read.o
+                              0x8148e (size before relaxing)
+ .debug_str     0x00084dea       0x2e src/ASF/common/utils/stdio/write.o
+                              0x81490 (size before relaxing)
+ .debug_str     0x00084e18      0xfe6 src/ASF/sam/boards/same70_xplained/init.o
+                              0x8609d (size before relaxing)
+ .debug_str     0x00085dfe      0x5b8 src/ASF/sam/drivers/pio/pio.o
+                              0x82035 (size before relaxing)
+ .debug_str     0x000863b6      0x44f src/ASF/sam/drivers/pio/pio_handler.o
+                              0x820a6 (size before relaxing)
+ .debug_str     0x00086805      0x7c7 src/ASF/sam/drivers/pmc/pmc.o
+                              0x8218a (size before relaxing)
+ .debug_str     0x00086fcc      0x301 src/ASF/sam/drivers/uart/uart.o
+                              0x8178f (size before relaxing)
+ .debug_str     0x000872cd      0xb6a src/ASF/sam/drivers/usart/usart.o
+                              0x82027 (size before relaxing)
+ .debug_str     0x00087e37      0x67c src/ASF/sam/utils/cmsis/same70/source/templates/gcc/startup_same70.o
+                              0x81c85 (size before relaxing)
+ .debug_str     0x000884b3      0x16f src/ASF/sam/utils/cmsis/same70/source/templates/system_same70.o
+                              0x726bc (size before relaxing)
+ .debug_str     0x00088622      0x748 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+                               0x6a1c (size before relaxing)
+ .debug_str     0x00088d6a     0x1783 src/main.o
+                              0x87ac0 (size before relaxing)
 
 .debug_frame    0x00000000     0x3bd8
  .debug_frame   0x00000000      0x240 src/ASF/common/services/clock/same70/sysclk.o

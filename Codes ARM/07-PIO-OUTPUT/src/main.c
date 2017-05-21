@@ -157,7 +157,7 @@
  * 8 como 1, ou seja, irá configurar o pino PIOC8 como sendo saída.
  *
  */
-#define LED_PIO_ID	 ID_PIOC
+#define LED_PIO_ID	 12 // ID do periférico C (ID_PIOC)
 #define LED_PIO			 PIOC
 #define LED_PIN			 8
 #define LED_PIN_MASK (1<<LED_PIN)
@@ -246,11 +246,40 @@ int main(void)
 	* @Brief Diferente de um código comum que executa em um pc, no uC deve estar
 	* sempre executando um código, por isso utilizamos esse loop infingir.
 	*/
-	while(1){
-		//delay_ms(100);
-		//	PIOC->PIO_SODR = (1 << 8);
-		//delay_ms(100);
-		//	PIOC->PIO_CODR = (1 << 8);
+	
 
-	};
+	int estado; //1 liga e 0 desliga
+	int i=0;
+	while(1){
+		if(i > 100000000){
+			if(estado){
+				PIOC->PIO_CODR = (1 << 8);
+				estado = 0;
+				}else{
+				PIOC->PIO_SODR = (1 << 8);
+				estado = 1;
+			}
+			i = 0;
+		}
+		i++;
+	}
+}	
+		
+		/*
+		for (int i =0; i>1000000; i++){
+			if (estado) {
+				PIOC->PIO_SODR = (1 << 8);
+				estado=0;
+				} 
+			else{
+				PIOC->PIO_CODR = (1 << 8);
+				estado =1;
+	}
+	i=0;
 }
+*/
+//Solução com delay
+//delay_ms(1000);
+//PIOC->PIO_SODR = (1 << 8);
+//delay_ms(1000);
+//PIOC->PIO_CODR = (1 << 8);
