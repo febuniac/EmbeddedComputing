@@ -69,19 +69,25 @@ int main(void)
 	// Configura LED em modo saída
 	ledConfig();
 
-	// Configura botao
+	// Configura botao da placa atmel
 		PMC->PMC_PCER0= (1<<10);
 		PIOA->PIO_PER = (1<<11);
 		PIOA->PIO_ODR = (1<<11);
 		PIOA->PIO_PUER= (1<<11);
 		PIOA->PIO_IFER= (1<<11);
+		
+	//configura botão OLED1 Xplained pro
+		PMC->PMC_PCER0= (1<<ID_PIOD);
+		PIOD->PIO_PER = (1<<28);
+		PIOD->PIO_ODR = (1<<28);
+		PIOD->PIO_PUER= (1<<28);
+		PIOD->PIO_IFER= (1<<28);
 
 	/************************************************************************/
 	/* Super loop                                                           */
 	/************************************************************************/
 	while(1){
-		int estado =0;
-		int i =0;
+	// If e else para funcionamento do botão da placa
 		if( PIOA->PIO_PDSR & (1<<11)){
 			PIOC->PIO_SODR = (1 << 8);
 			
@@ -89,22 +95,15 @@ int main(void)
 		else{
 			PIOC->PIO_CODR = (1 << 8);
 			}
-	}
-}
-		/*if (estado){
-			
-			if(i > 100000000){
-				if(estado){
-					PIOC->PIO_CODR = (1 << 8);
-					estado = 0;
-					}else{
-					PIOC->PIO_SODR = (1 << 8);
-					estado = 1;
-				}
-				i = 0;
-			}
-			i++;
+		// If e else para funcionamento do botão da OLED1 Xplained
+		if( PIOD->PIO_PDSR & (1<<28)){
+			PIOC->PIO_SODR = (1 << 8);
+				
 		}
-	}*/
+		else{
+			PIOC->PIO_CODR = (1 << 8);
+		}
+		}
+}
 
 
