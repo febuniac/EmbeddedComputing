@@ -150,19 +150,28 @@ static void USART1_init(void){
  *
  * Retorna a quantidade de char escritos
  */
-uint32_t usart_puts(uint8_t *pstring){
-	int contador = 0;
-	 
-	 while (*pstring[contador] > 0){
-		usart_serial_putchar(USART_COM, *pstring[contador]);	
-		contador ++; 
-	 } 
-	 
-     if ( uint32_t uart_is_tx_empty(Uart *pstring)) {
-		 
-	 }
-  return 0;
+uint32_t usart_puts(uint8_t *pstring){//pstring = vetor de char (string)
+	int contador = 0;//inicializando
+	if (uart_is_tx_empty(USART_COM)==1) {
+		while (pstring[contador] != NULL){
+			usart_serial_putchar(USART_COM, pstring[contador]);//enviando valor pela porta serial
+			contador++;//incrementando
+			 while (uart_is_tx_empty(USART_COM) == 0){
+				}
+			
+		}
+
+		return 0;
+	}
 }
+	// while (*pstring[contador] != NULL){
+	//	usart_serial_putchar(USART_COM, *(pstring[contador]));	
+	//	contador ++; 
+	// } 
+	 
+     //if ( uint32_t uart_is_tx_empty(USART_COM)) {
+	//	  break;
+	 //}
 
 /*
  * Usart get string
@@ -172,9 +181,16 @@ uint32_t usart_puts(uint8_t *pstring){
  * Retorna a quantidade de char lidos
  */
 uint32_t usart_gets(uint8_t *pstring){
+	int contador = 0;
 
-  return 0;  
+	while(pstring[contador] != "\n"){
+		usart_serial_getchar(USART_COM, pstring[contador]);
+		//pstring[contador++] = pstring[contador];
+	}
+	pstring[contador-1] = 0;
+	return contador;
 }
+
 
 /************************************************************************/
 /* Main Code	                                                        */
@@ -199,10 +215,10 @@ int main(void){
  
   /* Inicializa funcao de delay */
   delay_init( sysclk_get_cpu_hz());
-        
+          
 	while (1) {
     sprintf(bufferTX, "%s \n", "Ola Voce");
-    //usart_puts(bufferTX);
+    usart_puts(bufferTX);
    // usart_gets(bufferRX);
     delay_s(1);
 	}

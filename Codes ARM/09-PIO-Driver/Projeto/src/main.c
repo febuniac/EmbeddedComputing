@@ -10,6 +10,9 @@
 
 #include "asf.h"
 #include "conf_clock.h"
+//Importando os Headers da pasta Driver
+#include "Driver/pmc_insper.h"
+#include "Driver/pio_insper.h"
 
 /************************************************************************/
 /* Defines                                                              */
@@ -46,20 +49,29 @@ void but_init(void);
  * @Brief Inicializa o pino do LED
  */
 void led_init(int estado){
-	PMC->PMC_PCER0    = (1<<LED_PIO_ID);	    // Ativa clock do periférico no PMC
+	_pmc_enable_periph_clock(LED_PIO_ID);	    // Ativa clock do periférico no PMC(PMC->PMC_PCER0    = (1<<LED_PIO_ID);)
+	_pio_set_output(LED_PIO_ID,LED_PIN_MASK,0, 1); // Ativa saída  
+	//Código original
+	/*PMC->PMC_PCER0    = (1<<LED_PIO_ID);	    // Ativa clock do periférico no PMC
 	LED_PIO->PIO_PER  = LED_PIN_MASK;           // Ativa controle do pino no PIO    (PIO ENABLE register)
 	LED_PIO->PIO_OER  = LED_PIN_MASK;           // Ativa saída                      (Output ENABLE register)
     if(!estado)                                 // Checa pela inicialização desejada
 	    LED_PIO->PIO_CODR = LED_PIN_MASK;       // Coloca 0 na saída                (CLEAR Output Data register)
     else
-        LED_PIO->PIO_SODR = LED_PIN_MASK;       // Coloca 1 na saída                (SET Output Data register)
-};
+        LED_PIO->PIO_SODR = LED_PIN_MASK;       // Coloca 1 na saída  (SET Output Data register)
+		*/
+}
 
 /**
  * @Brief Inicializa o pino do BUT
  */
 void but_init(void){
-	PMC->PMC_PCER0       = (1<<BUT_PIO_ID);     // Ativa clock do periférico no PMC
+	_pmc_enable_periph_clock(BUT_PIO_ID);     // Ativa clock do periférico no PMC(PMC->PMC_PCER0       = (1<<BUT_PIO_ID);)
+	_pio_set_input(BUT_PIO, BUT_PIN_MASK, 0);
+	_pio_pull_up(BUT_PIO, BUT_PIN_MASK, 1);
+	
+	//Código original
+	/*PMC->PMC_PCER0       = (1<<BUT_PIO_ID);     // Ativa clock do periférico no PMC
 	BUT_PIO->PIO_ODR	 = BUT_PIN_MASK;        // Desativa saída                   (Output DISABLE register)
 	BUT_PIO->PIO_PER	 = BUT_PIN_MASK;        // Ativa controle do pino no PIO    (PIO ENABLE register)
 	BUT_PIO->PIO_PUER	 = BUT_PIN_MASK;        // Ativa pull-up no PIO             (PullUp ENABLE register)
@@ -99,13 +111,22 @@ int main(void)
 		* 1 : não apertado
 		* 0 : apertado
 		*/
-	    if(BUT_PIO->PIO_PDSR & (BUT_PIN_MASK)){
+	   	   
+		if(BUT_PIO->PIO_PDSR & (BUT_PIN_MASK)){
+			_pio_set(BUT_PIO, BUT_PIN_MASK);
+			} else {
+			_pio_clear(BUT_PIO, BUT_PIN_MASK);
+		}
+	   
+	    //Código original
+		/*if(BUT_PIO->PIO_PDSR & (BUT_PIN_MASK)){
 			LED_PIO->PIO_CODR = LED_PIN_MASK;
         }
 		else{
 			LED_PIO->PIO_SODR = LED_PIN_MASK;
-        }
-	};
+        }*/
+		}
+	}
 }
 
 
