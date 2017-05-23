@@ -395,13 +395,19 @@ static void task_monitor(void *pvParameters)
  */
 static void task_led(void *pvParameters)
 {
+	int delay = 100;
 	UNUSED(pvParameters);
 	for (;;) {
-	   if(pio_get_output_data_status(LED_PIO, LED_PIN_MASK))
+		if(pio_get_output_data_status(LED_PIO, LED_PIN_MASK))
 	   pio_clear(LED_PIO, LED_PIN_MASK);
 	   else
 	   pio_set(LED_PIO,LED_PIN_MASK);
-		vTaskDelay(100);
+		vTaskDelay(delay);
+	if (xSemaphoreTake(xSemaphore,( TickType_t ) 10)==pdTRUE){//segure o botão 1 da placa OLED e ele fica mais rapido
+		delay = 50;
+	}else{
+		delay = 100;
+	}
 	}
 }
 static void task_led_1(void *pvParameters)
@@ -471,13 +477,6 @@ static void configure_console(void)
 	 */
 #endif
 }
-void vATask( void * pvParameters )
-{
-    /* Create the semaphore to guard a shared resource.  As we are using
-    the semaphore for mutual exclusion we create a mutex semaphore
-    rather than a binary semaphore. */
-    xSemaphore = xSemaphoreCreateMutex();
-}
 
 static void task_but0(void *pvParameters)
 {
@@ -486,7 +485,7 @@ static void task_but0(void *pvParameters)
 		//Mudando o semaphore
 		if(!pio_get(BUT1_PIO,PIO_INPUT,BUT1_PIN_MASK)){
 			xSemaphoreGive( xSemaphore);//We have finished accessing the shared resource.  Release the semaphore.
-			vTaskDelay(1000);
+			vTaskDelay(100);
 		}
 	}
 }
@@ -511,6 +510,9 @@ int main(void)
 	/* Initialize the console uart */
 	configure_console();
 
+	 xSemaphore = xSemaphoreCreateCounting(1,0);
+	 xSemaphoreTake( xSemaphore, ( TickType_t ) 0 );
+	 
 	/* Output demo infomation. */
 	printf("-- Freertos Example --\n\r");
 	printf("-- %s\n\r", BOARD_NAME);
