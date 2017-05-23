@@ -152,11 +152,11 @@ static void USART1_init(void){
  */
 uint32_t usart_puts(uint8_t *pstring){//pstring = vetor de char (string)
 	int contador = 0;//inicializando
-	if (uart_is_tx_empty(USART_COM)==1) {
+	if (uart_is_tx_empty(USART_COM)==1) {//(uart_is_tx_empty)if empty vale 1 e cheio vale 2
 		while (pstring[contador] != NULL){
 			usart_serial_putchar(USART_COM, pstring[contador]);//enviando valor pela porta serial
 			contador++;//incrementando
-			 while (uart_is_tx_empty(USART_COM) == 0){
+			 while (uart_is_tx_empty(USART_COM) == 0){//um char de cada vez no buffer
 				}
 			
 		}
@@ -182,16 +182,16 @@ uint32_t usart_puts(uint8_t *pstring){//pstring = vetor de char (string)
  */
 uint32_t usart_gets(uint8_t *pstring){
 	int contador = 0;
+	uint8_t carac;
 
-	while(pstring[contador] != "\n"){
-		usart_serial_getchar(USART_COM, pstring[contador]);
-		//pstring[contador++] = pstring[contador];
-	}
-	pstring[contador-1] = 0;
-	return contador;
+	while(pstring[contador] != "\n"){//olha até o /n (o torna não blocante)
+		usart_serial_getchar(USART_COM, pstring[contador]);//para pegar os caracteres
+		pstring[contador] = carac;
+		contador++;
 }
 
-
+return contador;
+}
 /************************************************************************/
 /* Main Code	                                                        */
 /************************************************************************/
@@ -217,9 +217,14 @@ int main(void){
   delay_init( sysclk_get_cpu_hz());
           
 	while (1) {
-    sprintf(bufferTX, "%s \n", "Ola Voce");
-    usart_puts(bufferTX);
-   // usart_gets(bufferRX);
-    delay_s(1);
-	}
-}
+	 sprintf(bufferTX, "%s \n", "Ola Voce");
+	 if(uart_is_tx_empty(USART_COM)){
+		 usart_puts(bufferTX);
+	 }
+	 usart_gets(bufferRX);
+	 usart_puts(bufferTX);
+	 sprintf(bufferTX, "%s \n");
+	 delay_s(1);
+	 }
+ }
+
