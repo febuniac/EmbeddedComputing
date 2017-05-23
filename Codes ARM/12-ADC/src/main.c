@@ -16,6 +16,7 @@
 #include <assert.h>
 #include "asf.h"
 
+
 /************************************************************************/
 /* Defines                                                              */
 /************************************************************************/
@@ -41,11 +42,26 @@ volatile uint32_t g_ul_value = 0;
 
 /* Canal do sensor de temperatura */
 #define AFEC_CHANNEL_TEMP_SENSOR 11
+void TC0_init(void);
+static int32_t convert_adc_to_temp(int32_t ADC_value);
+static void configure_console(void);
+void mais_segundo(int *segundo, int *minuto, int *hora, int *dia, int *mes, int *ano);
+
+/************************************************************************/
+/* inicio                                                              */
+/************************************************************************/
+int segundo,minuto,hora,dia,mes,ano;
+segundo = 0;
+minuto = 35;
+hora = 7;
+dia = 22;
+mes = 5;
+ano = 2017;
+
 
 /************************************************************************/
 /* Funcoes                                                              */
 /************************************************************************/
-
 /**
  * \brief Configure UART console.
  * BaudRate : 115200
@@ -53,6 +69,29 @@ volatile uint32_t g_ul_value = 0;
  * 1 stop bit
  * sem paridade
  */
+
+void TC0_init(void){
+	uint32_t ul_div;
+	uint32_t ul_tcclks;
+	uint32_t ul_sysclk = sysclk_get_cpu_hz();
+	
+	uint32_t channel = 0;
+	
+	/* Configura o PMC */
+	pmc_enable_periph_clk(ID_TC0);
+
+	/** Configura o TC para operar em  4Mhz e interrupçcão no RC compare */
+	tc_find_mck_divisor(4, ul_sysclk, &ul_div, &ul_tcclks, ul_sysclk);
+	tc_init(TC0, channel, ul_tcclks | TC_CMR_CPCTRG);
+	tc_write_rc(TC0, channel, (ul_sysclk / ul_div) / 4);
+
+	/* Configura e ativa interrupçcão no TC canal 0 */
+	NVIC_EnableIRQ((IRQn_Type) ID_TC0);
+	tc_enable_interrupt(TC0, channel, TC_IER_CPCS);
+
+	/* Inicializa o canal 0 do TC */
+	tc_start(TC0, channel);
+}
 
 static void configure_console(void)
 {
@@ -100,6 +139,57 @@ static void AFEC_Temp_callback(void)
 {
 	g_ul_value = afec_channel_get_value(AFEC0, AFEC_CHANNEL_TEMP_SENSOR);
 	is_conversion_done = true;
+}
+
+void TC0_Handler(void){
+	volatile uint32_t ul_dummy;
+
+    /****************************************************************
+	* Devemos indicar ao TC que a interrupção foi satisfeita.
+    ******************************************************************/
+	ul_dummy = tc_get_status(TC0, 0);
+
+	/* Avoid compiler warning */
+	UNUSED(ul_dummy);
+	if(is_conversion_done == true) {
+		is_conversion_done = false;
+		mais_segundo(&segundo,&minuto,&hora,&dia,&mes,&ano);
+
+		printf("%d/%d/%d %d:%d:%d - Temp : %d \n \r\n",dia,mes,ano,hora,minuto,segundo,convert_adc_to_temp(g_ul_value/*voltagem recebida*/));//A função recebe como parametro uma voltagem e transforma em graus celsius
+		afec_start_software_conversion(AFEC0);
+}
+}
+
+
+void mais_segundo(int *segundo, int *minuto, int *hora, int *dia, int *mes, int *ano){
+	/* incrementa minuto (Para casos de mudança de hora ou de mes ou de ano) */
+	if(segundo>=59){
+		if(minuto>=59){
+			if(hora>=23){
+				if(dia>=30){
+					if(mes>=11){
+						ano++;
+					}
+					else{
+						mes++;
+					}
+					
+				}
+				else{
+					dia++;
+				}
+			}
+			else{
+				hora++;
+			}
+		}
+		else{
+			minuto++;
+		}
+	}
+		else{
+			segundo++;
+		}
 }
 
 /************************************************************************/
@@ -171,14 +261,10 @@ int main(void)
   /* Selecina canal e inicializa conversão */  
 	afec_channel_enable(AFEC0, AFEC_CHANNEL_TEMP_SENSOR);
   afec_start_software_conversion(AFEC0);
-
+	
+	TC0_init();
 	while (1) {
-		if(is_conversion_done == true) {
-			is_conversion_done = false;
-      
-      printf("Temp : %d \n \r\n",convert_adc_to_temp(g_ul_value/*voltagem recebida*/));//A função recebe como parametro uma voltagem e transforma em graus celsius
-      afec_start_software_conversion(AFEC0);
-      delay_s(1);
+
 		}
 	}
-}
+
